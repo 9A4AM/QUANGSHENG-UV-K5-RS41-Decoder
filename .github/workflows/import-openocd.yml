@@ -1,1 +1,40 @@
+name: Import openocd-win
 
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          path: target
+
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+        with:
+          repository: hoanb1/uv-k5-firmware-custom
+          path: source
+          ref: main
+
+      - name: Copy openocd-win folder
+        run: |
+          cp -a source/openocd-win target/openocd-win
+
+      - name: Commit openocd-win
+        working-directory: target
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add openocd-win
+
+          git diff --cached --quiet || git commit -m "Import openocd-win from uv-k5-firmware-custom"
+
+          git push
