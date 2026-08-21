@@ -1,1 +1,41 @@
+name: Import external folder
 
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout target repository
+        uses: actions/checkout@v6
+        with:
+          path: target
+
+      - name: Checkout source repository
+        uses: actions/checkout@v6
+        with:
+          repository: hoanb1/uv-k5-firmware-custom
+          path: source
+          ref: main
+
+      - name: Copy external folder
+        run: |
+          cp -a source/external target/external
+
+      - name: Commit external folder
+        working-directory: target
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add external
+
+          git diff --cached --quiet || git commit -m "Import external folder from uv-k5-firmware-custom"
+
+          git push
