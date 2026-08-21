@@ -1,8 +1,3 @@
-# QUANGSHENG-UV-K5-RS41-Decoder
-QUANGSHENG UV K5 Radiosonde RS41 Decoder based on https://github.com/hoanb1/uv-k5-firmware-custom
-Change by 9A4AM --> Latitude and Longitude from 4 decimal places to 6 decimal places
-
-
 # Quansheng UV-K5 Custom Firmware
 
 This is a highly customized firmware for the Quansheng UV-K5 (and compatible radios), heavily focused on advanced RF functionalities such as **Radiosonde RS41 Decoding**, **SI4732 SSB Reception**, **Spectrum Analysis**, and more. 
@@ -50,20 +45,7 @@ You can use `k5prog` to flash the firmware directly via the USB-C programming ca
 
 ### Radiosonde RS41 Decoder
 [Detailed Hardware Modification & Usage Guide](doc/RADIOSONDE.md)
-
-![Audio Connection Hardware Mod](./images/audio-connection.jpg)
-![image](./images/IMG_20260519_073139.jpg)
-
-Requires a hardware mod (tapping the discriminator output from BK4819 Pin 8 to MCU Pin 9 - PA8). Decodes live telemetry, GPS coordinates, and generates a dynamic QR Code for immediate smartphone map integration.
-
-### CW Morse Decoder & Transmitter
-Does not require any hardware modification. Works by reading the BK4819 RSSI register at high speed.
-* **Decoder**: Automatic WPM estimation and text decoding from FM signals, tracking noise floor dynamically.
-* **Keyboard Text Entry**: Multi-tap alphanumeric text editor with backspace (STAR key).
-* **Automated Morse Transmission**: Type a message and press MENU to transmit it automatically. Shows real-time flashing LED and screen indicator matching the code.
-* **Manual Paddles**: Press Side Key 1 for dit and Side Key 2 for dah.
-* **Speaker Audio Output (F key)**: Toggle speaker between Sound On (`SON`) and Mute (`MUT`). Enables sidetone audio through the speaker during transmission (TX) using dynamic Tone 1 generator activation.
-
+Requires a hardware mod (tapping the discriminator output to PA8). Decodes live telemetry, GPS coordinates, and generates a dynamic QR Code for immediate smartphone map integration.
 
 ### Operating Instructions / Shortcuts
 
@@ -79,38 +61,20 @@ Does not require any hardware modification. Works by reading the BK4819 RSSI reg
 | **Long Press `3` / `F+3`** | Switch between Frequency (VFO) / Channel (MR) mode. |
 | **Long Press `6` / `F+6`** | Switch transmit power. |
 | **Long Press `8` / `F+8`** | Reverse frequency. |
-| Long Press `9` | **Open CW Morse Decoder + Keyer** (if compiled). |
-| **`F+9`** | **Open RS41 Radiosonde Decoder** (if compiled). |
+| **Long Press `9` / `F+9`** | **Open RS41 Radiosonde Decoder** (if compiled). |
 | **`F+5`** | Spectrum Analyzer (if compiled). |
 | **`F+M`** | Open SMS Messenger (if compiled). |
 | **`F+UP`** | Toggle key tone. |
 | **`F+DOWN`** | Automatic Doppler shift (if compiled). |
 | **`F+EXIT`** | Invert menu navigation (Up/Down). |
 
-### CW Mode Shortcuts (When Enabled)
-
-| Key | Function |
-|---|---|
-| **`0` - `9`** | Multi-tap alphanumeric text entry (Nokia style). |
-| **`STAR (*)`** | Backspace (delete last character from buffer). |
-| **`MENU`** | Send the composed text automatically over the air (M=TX). |
-| **`F` (# key)** | Toggle local speaker sound output (`SON` for sound on, `MUT` for silent RX decoding and TX transmission). |
-| **`UP` / `DOWN`** | Adjust WPM speed (5 to 40 WPM). |
-| **`Side Key 1`** | Send custom manual **dit** (.) tone. |
-| **`Side Key 2`** | Send custom manual **dah** (-) tone. |
-| **`EXIT`** | Abort automatic transmission if active; exits CW mode if idle. |
-
-
 ### SI4732 Radio Shortcuts (When Enabled)
-
 
 | Key | Function |
 |---|---|
 | **Short press `Side Key 1`, Short press `Side Key 2`** | Change BFO in SSB mode |
 | **Short press `5`** | Enter frequency, **short press `*`** for decimal point, **short press `MENU`** to confirm |
 | **Short press `0`** | Switch mode (AM/FM/SSB), **short press `F`** to switch LSB/USB |
-| **Short press `*` / `MENU`** | **Save Preset Screen** (Use `<` / `>` to browse list, `MENU` to confirm save, `1`-`9` to jump, `EXIT` to cancel). |
-| **F + 0** | **Radio List Screen** (Use `<` / `>` to browse list, `MENU` to confirm load, `1`-`9` to jump, `EXIT` to cancel). |
 | **Short press `1`, Short press `7`** | Change step frequency |
 | **Short press `4`** | Toggle signal strength display |
 | **Short press `6`** | Change bandwidth |
@@ -147,11 +111,9 @@ make clean && make build ENABLE_RS41=1 ENABLE_4732=1 ENABLE_4732SSB=1
 
 | Eeprom Address | Description |
 |---|---|
-| **0x01D00 ~ 0x02000** | Rarely changed. |
-| **0x01D00 ~ 0x01E00<br/>0x1F90 ~ 0x01FF0** | **MDC1200** - 22 MDC contacts. Each contact occupies 16B (first 2B: MDC ID, next 14B: contact name). |
-| **0x01900 ~ 0x0193B** | **SI4732 Presets** - 20 quick-access slots (3 bytes each: 2B frequency, 1B modulation mode). |
-| **0x00E30 ~ 0x00E3F** | **Radiosonde Tracker** - Saved telemetry data of the last decoded weather balloon (preventing conflicts with VFO channel attributes). |
-| **0x01FFF** | **MDC1200** - Number of MDC contacts. |
+| **0X01D00 ~ 0x02000** | Rarely changed. |
+| **0X01D00 ~ 0X01E00<br/>0X1F90 ~ 0X01FF0** | **MDC1200** - 22 MDC contacts. Each contact occupies 16B (first 2B: MDC ID, next 14B: contact name). |
+| **0X01FFF** | **MDC1200** - Number of MDC contacts. |
 | **0x01FFD ~ 0x01FFE** | **MDC1200** - MDC ID. |
 | **0x01FF8 ~ 0x01FFC** | Side key functions. |
 | **Expanded EEPROM (≥1Mib)** | |
@@ -162,16 +124,6 @@ make clean && make build ENABLE_RS41=1 ENABLE_4732=1 ENABLE_4732SSB=1
 | **0x02BAA ~ 0x02BB5** | **Doppler** - Start transit time and departure time (YY-MM-DD-HH-MM-SS). |
 | **0x02BB6 ~ 0x02BBB** | **Doppler** - Total transit time, Transmitter sub-audio, Receiver sub-audio. |
 | **0x02C00 ~ 0x02D34** | **Doppler** - CTCSS_Options and DCS_Options. |
-## Credits
-
-This project is a customized fork built upon the incredible work of the following open-source projects:
-
-- **[Dual Tachyon](https://github.com/DualTachyon/uv-k5-firmware)**: The original open-source firmware for the Quansheng UV-K5.
-- **[losehu](https://github.com/losehu/uv-k5-firmware-custom)**: Provided the foundational base for advanced features such as the SI4732 integration and the expanded feature set.
-- **[OneOfEleven](https://github.com/OneOfEleven/uv-k5-firmware-custom)**: Significant code optimizations and feature enhancements.
-
-Special thanks to the global UV-K5 development community for their continuous contributions to this platform.
-
 ## Disclaimer
 
 Flashing custom firmware carries inherent risks. You are responsible for ensuring your radio operates within the legal limits of your local regulations.

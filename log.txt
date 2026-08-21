@@ -1,0 +1,7 @@
+Deletion complete.
+del /Q *.bin
+make build ENABLE_CHINESE_FULL=0 ENABLE_ENGLISH=1 ENABLE_FMRADIO=1 ENABLE_MESSENGER=1 ENABLE_MESSENGER_DELIVERY_NOTIFICATION=1 ENABLE_MESSENGER_NOTIFICATION=1 ENABLE_SPECTRUM=1 ENABLE_MDC1200=0 ENABLE_MDC1200_EDIT=0 ENABLE_MDC1200_CONTACT=0
+make[1]: Ulazim u direktorij `C:/Users/9A4AM/Desktop/uv-k5-firmware-custom-1.1.0_6dec_9A4AM'
+Deletion complete.
+make[1]: Izlazim iz direktorija `C:/Users/9A4AM/Desktop/uv-k5-firmware-custom-1.1.0_6dec_9A4AM'
+Press any key to continue . . . 
