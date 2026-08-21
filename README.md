@@ -1,5 +1,7 @@
 # Quansheng UV-K5 Custom Firmware modified by 9A4AM@2026
-Latitude and Longitude was with 4 decimal places, modified code to 6 decimal places on screen and QR code
+Latitude and Longitude was with 4 decimal places, modified code to 6 decimal places on screen and QR code.
+New Python script for compile firmware on Windows.
+Firmware tested and wokr perfect.
 
 # Quansheng UV-K5 Custom Firmware
 
