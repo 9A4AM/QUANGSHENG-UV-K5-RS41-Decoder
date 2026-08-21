@@ -1,3 +1,6 @@
+# Quansheng UV-K5 Custom Firmware modified by 9A4AM@2026
+Latitude and Longitude was with 4 decimal places, modified code to 6 decimal places on screen and QR code
+
 # Quansheng UV-K5 Custom Firmware
 
 This is a highly customized firmware for the Quansheng UV-K5 (and compatible radios), heavily focused on advanced RF functionalities such as **Radiosonde RS41 Decoding**, **SI4732 SSB Reception**, **Spectrum Analysis**, and more. 
